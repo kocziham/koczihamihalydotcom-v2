@@ -8,4 +8,5 @@ startCommand = "npm start"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 5
 healthcheckPath = "/"
-healthcheckTimeout = 30
+healthcheckTimeout = 120
+healthcheckInterval = 10
