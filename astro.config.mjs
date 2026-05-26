@@ -13,7 +13,7 @@ Object.entries(tokens['color-dark']).forEach(([key, value]) => {
 
 export default defineConfig({
   output: 'server',
-  adapter: node({ mode: 'standalone' }),
+  adapter: node({ mode: 'standalone', host: '0.0.0.0' }),
   integrations: [],
   site: process.env.SITE_URL || 'https://koczihamihaly.com',
   vite: {
