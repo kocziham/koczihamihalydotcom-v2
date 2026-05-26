@@ -5,7 +5,9 @@ import { dirname } from 'path';
 const port = process.env.PORT || 8080;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const { handler } = await import('./dist/server/entry.mjs');
+const { handler, startServer } = await import('./dist/server/entry.mjs');
+console.log('DEBUG: handler type:', typeof handler);
+console.log('DEBUG: startServer type:', typeof startServer);
 
 const server = http.createServer(async (req, res) => {
   try {
