@@ -16,9 +16,17 @@ const server = http.createServer(async (req, res) => {
       method: req.method,
       headers: req.headers,
       body: ['GET', 'HEAD'].includes(req.method) ? undefined : req,
+      duplex: 'half',
     });
 
     const response = await handler(request);
+
+    if (!response) {
+      console.error('Handler returned undefined');
+      res.writeHead(500);
+      res.end('Handler returned undefined');
+      return;
+    }
 
     res.writeHead(response.status, Object.fromEntries(response.headers));
     res.end(await response.text());
