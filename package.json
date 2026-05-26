@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "start": "NODE_ENV=production node ./dist/server/entry.mjs"
+    "start": "node ./dist/server/entry.mjs"
   },
   "dependencies": {
     "astro": "^4.14.0",

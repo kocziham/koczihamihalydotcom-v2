@@ -4,6 +4,6 @@ buildCommand = "npm install && npm run build"
 startCommand = "npm start"
 
 [deploy]
-startCommand = "SITE_URL=https://koczihamihaly.com node start.mjs"
+startCommand = "npm start"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 5
