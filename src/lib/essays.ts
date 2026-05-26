@@ -8,8 +8,8 @@ export async function getEssays(language: 'en' | 'hu') {
 }
 
 export async function getEssayBySlug(slug: string, language: 'en' | 'hu') {
-  const essays = await getCollection('writing', ({ data, id }) => {
-    return data.slug === slug && data.language === language;
+  const essays = await getCollection('writing', (entry) => {
+    return entry.slug === slug && entry.data.language === language;
   });
   return essays[0];
 }
@@ -20,8 +20,8 @@ export async function getAllEssays() {
 }
 
 export async function getEssaysBySide(slug: string): Promise<{ en?: any; hu?: any }> {
-  const essays = await getCollection('writing', ({ data }) => {
-    return data.slug === slug && !data.draft;
+  const essays = await getCollection('writing', (entry) => {
+    return entry.slug === slug && !entry.data.draft;
   });
 
   if (essays.length === 0) return {};

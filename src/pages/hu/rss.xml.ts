@@ -14,7 +14,7 @@ export async function GET(context: any) {
       title: essay.data.title,
       pubDate: new Date(essay.data.date),
       description: essay.data.description,
-      link: `/hu/writing/${essay.data.slug}/`,
+      link: `/hu/writing/${essay.slug}/`,
     })),
     customData: '<language>hu</language>',
   });

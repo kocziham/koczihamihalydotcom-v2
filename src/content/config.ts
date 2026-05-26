@@ -4,8 +4,7 @@ const writingCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    slug: z.string(),
-    date: z.string().datetime(),
+    date: z.coerce.date(),
     description: z.string(),
     pillar: z.enum(['genai-banking', 'ai-governance', 'ai-consulting', 'data-foundations']),
     language: z.enum(['en', 'hu']),

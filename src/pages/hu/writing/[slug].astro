@@ -1,25 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { calculateReadingTime, formatDate } from '../../../lib/essays';
+import { calculateReadingTime, formatDate, getEssayBySlug } from '../../../lib/essays';
 import { pillars } from '../../../content/config';
 
-export async function getStaticPaths() {
-  const essays = await getCollection('writing', ({ data }) => {
-    return data.language === 'hu' && !data.draft;
-  });
-
-  return essays.map(essay => ({
-    params: { slug: essay.data.slug },
-    props: { essay },
-  }));
+const { slug } = Astro.params;
+const essay = slug ? await getEssayBySlug(slug, 'hu') : undefined;
+if (!essay || essay.data.draft) {
+  return new Response(null, { status: 404 });
 }
-
-interface Props {
-  essay: any;
-}
-
-const { essay } = Astro.props;
 const { Content } = await essay.render();
 const readingTime = calculateReadingTime(essay.body);
 const formattedDate = formatDate(essay.data.date, 'hu');
