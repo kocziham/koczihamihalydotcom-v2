@@ -4,6 +4,6 @@ buildCommand = "npm install && npm run build"
 startCommand = "npm start"
 
 [deploy]
-startCommand = "npm start"
+startCommand = "PORT=8080 npm start"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 5
