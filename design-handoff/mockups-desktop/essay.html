@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Model risk after the foundation model — Kocziha Mihály</title>
+  <meta name="description" content="The MNB and ECB both updated their model-risk guidance this spring. Neither has caught up with what generative systems actually do inside a bank.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../shared.css">
+</head>
+<body>
+
+  <!-- Reading progress (driven by JS in production — held at 38% here for preview) -->
+  <div class="progress" aria-hidden="true" style="width: 38%"></div>
+
+  <header class="bar">
+    <div class="bar-inner shell">
+      <a class="brand" href="home.html">
+        <span class="brand-name">Kocziha Mihály</span>
+        <span class="brand-role">Head of Consulting · SMP Solutions</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link is-active" aria-current="page" href="writing-index.html">Writing</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="speaking.html">Speaking</a>
+        <a class="nav-link" href="#contact">Contact</a>
+        <span class="lang-switch">
+          <button class="is-active" aria-pressed="true">EN</button>
+          <span class="sep" aria-hidden="true">/</span>
+          <button>HU</button>
+        </span>
+      </nav>
+      <button class="nav-toggle" aria-label="Open menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h18M3 17h18"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <main data-screen-label="02 Single essay">
+    <article class="essay shell-essay">
+
+      <a class="essay-back" href="writing-index.html">← All writing</a>
+
+      <div class="essay-eyebrow">
+        <span class="essay-num">008</span>
+        <span class="tag-dot" aria-hidden="true"></span>
+        <span class="tag-pillar">Model Risk</span>
+        <span class="tag-dot" aria-hidden="true"></span>
+        <span class="tag">14 May 2026</span>
+        <span class="tag-dot" aria-hidden="true"></span>
+        <span class="tag-lang">EN · HU</span>
+        <span class="tag-dot" aria-hidden="true"></span>
+        <span class="tag">14 min read</span>
+      </div>
+
+      <h1 class="essay-title">Model risk after the foundation model</h1>
+      <p class="essay-deck">The MNB and ECB both updated their model-risk guidance this spring. Neither has caught up with what generative systems actually do inside a bank.</p>
+
+      <div class="essay-byline">
+        <strong>By Kocziha Mihály</strong>
+      </div>
+
+      <div class="essay-body">
+        <p>The Magyar Nemzeti Bank's revised model-risk recommendation, published in March, runs to forty-one pages. The European Central Bank's parallel update, four weeks later, runs to longer. I have read them both twice, and I think they are both, in their different ways, the wrong document for the moment.</p>
+
+        <p>This is not a complaint about regulators. The MNB's drafting committee is, by my count, the best-staffed it has been in a decade, and the ECB document contains at least three paragraphs that I would happily quote to a board. The problem is structural. Both papers extend a 2017-vintage frame — model lifecycle, validation, ongoing monitoring, three lines of defence — onto systems that have outgrown the frame's load-bearing assumptions. They assume a model is a thing you build, calibrate, validate, and then watch. Foundation models are not that thing.<a href="#fn-1"><sup class="fn">1</sup></a></p>
+
+        <h2>What the frame assumes</h2>
+
+        <p>Take a credit-risk model from 2019. You can name its training data; you can describe its features; you can write its specification in a few pages; you can run a champion-challenger; you can monitor drift on a fixed set of variables. The model is, in a meaningful sense, knowable. A validator can read it.</p>
+
+        <p>The frame that emerged in the wake of the 2008 crisis — and that the MNB and ECB both formalised between 2017 and 2019 — was built around this kind of model. It assumes that a competent second-line reviewer, given enough time, can form an independent judgement about whether the model is fit for purpose. That assumption is doing more work in the existing regulation than most people realise.</p>
+
+        <blockquote>A foundation model is not a model in the sense your validation policy assumes. It is closer to a piece of infrastructure that happens to produce outputs.</blockquote>
+
+        <p>A foundation model is not a model in that sense. It is closer to a piece of infrastructure that happens to produce outputs. Nobody at the bank built it. Nobody at the bank can read it. The training data is, in most cases, contractually undisclosable. The "specification" is a prompt and a <code>temperature</code> setting. The drift you should worry about is not in the input variables — it is in the model weights, which the vendor changes when they feel like it.</p>
+
+        <p>The validator who is supposed to form an independent judgement about whether this thing is fit for purpose has, in practice, no surface to grip.</p>
+
+        <h2>Mit csinálnak helyette a bankok</h2>
+
+        <p>The banks I work with have, mostly without saying so, given up on validating the foundation model itself. They have moved one layer up. They validate the <em>use case</em>: the prompt, the retrieval system, the guardrails, the human review, the audit trail, the kill switch. They treat the foundation model as a regulated dependency — the way they treat the core banking system, or the SWIFT network, or the credit-bureau feed — rather than a model they own.</p>
+
+        <p>This is, I think, correct. It is also not what either recommendation says you should do.<a href="#fn-2"><sup class="fn">2</sup></a></p>
+
+        <p>The MNB document acknowledges the existence of large language models in a single paragraph, on page twenty-six, and refers the reader to forthcoming guidance. The ECB document does slightly better — it has a dedicated section on generative AI — but the section reads as if it were written by someone who has never run a workshop with a model-validation function trying to apply traditional MRM controls to a RAG system, and was surprised by what didn't work.</p>
+
+        <h2>The supervisory expectation problem</h2>
+
+        <p>The deeper issue is not the text of the recommendations. It is the implicit contract behind them.</p>
+
+        <p>For two decades, the contract has been: the bank does its model-risk management, the supervisor reviews the bank's model-risk management, and at the boundary between them is a stack of documents the supervisor can examine. The documents are the surface of contact.</p>
+
+        <p>With foundation models, that surface is increasingly fictional. Banks produce documents that conform to the format the supervisor expects, while the actual control work happens elsewhere — in evaluation harnesses, in prompt-injection red teams, in latency SLOs with the model provider. The documents are not lying, exactly; they are just no longer where the control lives.</p>
+
+        <h3>A note on the next twelve months</h3>
+
+        <p>The MNB has signalled an addendum for late 2026. The ECB is rumoured to be preparing something more substantial. The window for a useful intervention from the industry side is open now, and will not be open in eighteen months. The banks that engage early — through the Bankszövetség, through bilateral channels with the supervisor, through the kind of working groups the MNB has historically been willing to convene — will shape what the next frame looks like.</p>
+
+        <p>The ones that do not engage will inherit it.</p>
+      </div>
+
+      <div class="essay-end" aria-hidden="true">
+        <span class="essay-end-mark">§</span>
+      </div>
+
+      <aside class="footnotes" aria-label="Footnotes">
+        <h3>Footnotes</h3>
+        <ol>
+          <li id="fn-1">The 2017 MNB guidance defines a model as "a quantitative method, system, or approach that applies statistical, economic, financial, or mathematical theories, techniques, and assumptions to process input data into quantitative estimates." This definition is doing a lot of work it can no longer carry.</li>
+          <li id="fn-2">In conversations with model-risk leads at three of the top five Hungarian banks between January and April 2026. None on the record. The convergence is striking.</li>
+        </ol>
+      </aside>
+
+      <section class="essay-tail">
+        <div class="essay-tail-label">Related writing</div>
+        <div class="essay-tail-list">
+          <a href="essay.html">What the second line actually does about AI</a>
+          <a href="essay.html">DORA is quietly reshaping vendor selection</a>
+          <a href="essay.html">Mire figyel valójában a szabályozó?</a>
+        </div>
+      </section>
+
+      <nav class="essay-prevnext" aria-label="Adjacent essays">
+        <a href="essay.html">
+          <span class="label">← Previous</span>
+          <span class="title-link">DORA is quietly reshaping vendor selection</span>
+        </a>
+        <a class="next" href="essay.html">
+          <span class="label">Next →</span>
+          <span class="title-link">What the second line actually does about AI</span>
+        </a>
+      </nav>
+
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="foot-inner shell">
+      <div class="foot-col">
+        <div class="foot-mark">Kocziha Mihály</div>
+        <div>Head of Consulting · SMP Solutions</div>
+        <div style="margin-top: 6px;">© 2026 · koczihamihaly.com</div>
+      </div>
+      <div class="foot-col">
+        <a href="writing-index.html">Writing</a>
+        <a href="about.html">About</a>
+        <a href="speaking.html">Speaking</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="foot-col">
+        <a href="mailto:mihaly@koczihamihaly.com">mihaly@koczihamihaly.com</a>
+        <a href="https://www.linkedin.com">LinkedIn</a>
+        <a href="#rss">RSS</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

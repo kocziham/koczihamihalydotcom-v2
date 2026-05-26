@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const meta = {
+  title: 'Kapcsolat — Kocziha Mihály',
+  description: 'Írj nekem.',
+};
+---
+
+<BaseLayout title={meta.title} description={meta.description} lang="hu" currentNav="contact">
+  <div class="shell-index" style="padding-top: var(--space-20); padding-bottom: var(--space-32);">
+    <h1 style="font-family: var(--font-serif); font-size: var(--fs-40); margin: 0 0 var(--space-10) 0;">Kapcsolat</h1>
+
+    <div style="font-family: var(--font-serif); font-size: var(--fs-19); line-height: var(--lh-body); max-width: var(--measure-essay);">
+      <p>Email: <a href="mailto:mihaly.kocziha@smp.hu">mihaly.kocziha@smp.hu</a></p>
+      <p>LinkedIn: <a href="https://www.linkedin.com/in/koczihamilay/" target="_blank" rel="noopener noreferrer">linkedin.com/in/koczihamilay</a></p>
+      <p>Médiamegkeresésekhez, előadásmeghívásokhoz vagy tanácsadási projektekhez írj közvetlenül. Lényeges levelekre válaszolok.</p>
+    </div>
+  </div>
+</BaseLayout>

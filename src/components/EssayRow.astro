@@ -1,0 +1,47 @@
+---
+import { type Language } from '../lib/i18n';
+import { pillars } from '../content/config';
+import { formatDate } from '../lib/essays';
+
+interface Props {
+  title: string;
+  description: string;
+  date: string;
+  slug: string;
+  pillar: 'genai-banking' | 'ai-governance' | 'ai-consulting' | 'data-foundations';
+  languages: Language[];
+  lang: Language;
+  index?: boolean;
+  number?: number;
+}
+
+const { title, description, date, slug, pillar, languages, lang, index = false, number } = Astro.props;
+const href = `/${lang}/writing/${slug}/`;
+const pillarLabel = pillars[lang][pillar];
+const formattedDate = formatDate(date, lang);
+
+const formatDateShort = (d: string) => {
+  const date = new Date(d);
+  return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+};
+---
+
+<a class={index ? 'index-row' : 'essay-row'} href={href}>
+  {index && (
+    <div class="index-row-date">
+      <div class="index-row-num">№ {String(number).padStart(3, '0')}</div>
+      <div>{formatDateShort(date)}</div>
+    </div>
+  )}
+  {!index && (
+    <div class="essay-row-date">{formattedDate}</div>
+  )}
+  <div>
+    <div class={index ? 'index-row-title' : 'essay-row-title'}>{title}</div>
+    <div class={index ? 'index-row-desc' : 'essay-row-desc'}>{description}</div>
+  </div>
+  <div class={index ? 'index-row-meta' : 'essay-row-meta'}>
+    <span class="tag-pillar">{pillarLabel.toUpperCase()}</span>
+    <span class="tag-lang">{languages.map(l => l.toUpperCase()).join(' · ')}</span>
+  </div>
+</a>

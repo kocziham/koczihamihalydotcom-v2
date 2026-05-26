@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const meta = {
+  title: 'Rólam — Kocziha Mihály',
+  description: 'Kocziha Mihály az SMP Solutions tanácsadási igazgatója, az AI-irányítás és a banktranszformáció szakértője.',
+};
+---
+
+<BaseLayout title={meta.title} description={meta.description} lang="hu" currentNav="about">
+  <div class="shell-index" style="padding-top: var(--space-20); padding-bottom: var(--space-32);">
+    <h1 style="font-family: var(--font-serif); font-size: var(--fs-40); margin: 0 0 var(--space-10) 0;">Rólam</h1>
+
+    <div style="font-family: var(--font-serif); font-size: var(--fs-19); line-height: var(--lh-body); max-width: var(--measure-essay);">
+      <p>Az SMP Solutions tanácsadási csapatát vezetek, egy budapesti technológiai tanácsadó cég, amely a pénzügyi szolgáltatásokra, adatplatformokra és AI-irányításra szakosodott.</p>
+
+      <p>Az elmúlt nyolc évben magyar és közép-európai bankok szabályozási és operatív csapatainak, valamint kockázatkezelési funkcióinak dolgoztam a szabályozott környezetben való AI-rendszer telepítésének valóságáról.</p>
+
+      <p>Ezt megelőzően egy évtizedet töltöttem adatmérnökséggel és analitikával, platformok építésével bankok és biztosítók számára a CEE régió szerte.</p>
+
+      <p>Ezek az írások arra a helyre való gondolkodásnak egy lehetősége, hogy az AI mit jelent a bankászetban, milyen a szakadék a szabályozási szándék és az operatív valóság között, valamint az AI-transzformáció csendes sürgős munkája, hogy az valami olyasmi legyen, amely tényleg működik.</p>
+    </div>
+  </div>
+</BaseLayout>

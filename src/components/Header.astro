@@ -1,0 +1,132 @@
+---
+import { type Language, t } from '../lib/i18n';
+
+interface Props {
+  lang: Language;
+  currentNav?: string;
+}
+
+const { lang, currentNav } = Astro.props;
+const getUrl = (path: string) => `/${lang}${path}`;
+---
+
+<header class="bar">
+  <div class="bar-inner shell">
+    <a class="brand" href={getUrl('/')}>
+      <span class="brand-name">Kocziha Mihály</span>
+      <span class="brand-role">Head of Consulting · SMP Solutions</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a class="nav-link" class:list={['is-active', currentNav === 'writing']} href={getUrl('/writing')}>{t('writing', lang)}</a>
+      <a class="nav-link" class:list={['is-active', currentNav === 'about']} href={getUrl('/about')}>{t('about', lang)}</a>
+      <a class="nav-link" class:list={['is-active', currentNav === 'speaking']} href={getUrl('/speaking')}>{t('speaking', lang)}</a>
+      <a class="nav-link" class:list={['is-active', currentNav === 'contact']} href={getUrl('/contact')}>{t('contact', lang)}</a>
+      <div class="lang-switch">
+        <button class:list={['is-active', lang === 'en']} aria-pressed={lang === 'en'}>EN</button>
+        <span class="sep" aria-hidden="true">/</span>
+        <button class:list={['is-active', lang === 'hu']} aria-pressed={lang === 'hu'}>HU</button>
+      </div>
+    </nav>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h18M3 17h18"></path></svg>
+    </button>
+  </div>
+  <div class="nav-mobile" aria-hidden="true">
+    <nav>
+      <a href={getUrl('/writing')}>{t('writing', lang)}</a>
+      <a href={getUrl('/about')}>{t('about', lang)}</a>
+      <a href={getUrl('/speaking')}>{t('speaking', lang)}</a>
+      <a href={getUrl('/contact')}>{t('contact', lang)}</a>
+    </nav>
+    <div class="lang-switch">
+      <button class:list={['is-active', lang === 'en']} aria-pressed={lang === 'en'}>EN</button>
+      <span class="sep" aria-hidden="true">/</span>
+      <button class:list={['is-active', lang === 'hu']} aria-pressed={lang === 'hu'}>HU</button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile nav toggle
+  const toggle = document.querySelector('.nav-toggle');
+  const mobile = document.querySelector('.nav-mobile');
+
+  if (toggle && mobile) {
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+      mobile.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
+    });
+
+    // Close on link click
+    mobile.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        mobile.setAttribute('aria-hidden', 'true');
+      });
+    });
+  }
+</script>
+
+<style>
+  .nav-mobile {
+    display: none;
+    position: fixed;
+    inset: 64px 0 0 0;
+    background: var(--color-paper);
+    padding: var(--space-6);
+    flex-direction: column;
+    z-index: var(--z-overlay);
+  }
+
+  .nav-mobile[aria-hidden="false"] {
+    display: flex;
+  }
+
+  .nav-mobile nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .nav-mobile a {
+    font-family: var(--font-serif);
+    font-size: var(--fs-32);
+    color: var(--color-text);
+  }
+
+  @media (max-width: 820px) {
+    .nav-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text);
+      padding: var(--space-2);
+    }
+
+    .nav {
+      display: none;
+    }
+  }
+
+  @media (min-width: 821px) {
+    .nav-mobile {
+      display: none !important;
+    }
+
+    .nav-toggle {
+      display: none;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      margin: 0 auto;
+    }
+  }
+</style>

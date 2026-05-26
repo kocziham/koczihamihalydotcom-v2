@@ -1,0 +1,25 @@
+/* Self-hosted fonts */
+@import url("@fontsource-variable/source-serif-4");
+@import url("@fontsource-variable/inter");
+@import url("@fontsource/jetbrains-mono");
+
+@import url("./tokens.css");
+@import url("./shared.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tailwind reset override — use token colors via CSS variables */
+@layer base {
+  body {
+    @apply antialiased;
+  }
+}
+
+/* Utilities for token-based values */
+@layer utilities {
+  .text-serif { @apply font-serif; }
+  .text-sans { @apply font-sans; }
+  .text-mono { @apply font-mono; }
+}

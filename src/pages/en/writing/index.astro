@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EssayRow from '../../../components/EssayRow.astro';
+import { getEssays } from '../../../lib/essays';
+import { pillars } from '../../../content/config';
+
+const allEssays = await getEssays('en');
+const lang = 'en' as const;
+
+const meta = {
+  title: 'Writing — Kocziha Mihály',
+  description: 'Essays on AI governance, GenAI in banking, AI transformation, and data foundations.',
+};
+---
+
+<BaseLayout title={meta.title} description={meta.description} lang={lang} currentNav="writing">
+  <div class="shell-index" style="padding-top: var(--space-20); padding-bottom: var(--space-32);">
+    <h1 style="font-family: var(--font-serif); font-size: var(--fs-40); margin: 0 0 var(--space-10) 0;">Writing</h1>
+
+    <div class="filter-bar">
+      <button class="filter-pill is-active" data-filter="all">All</button>
+      {Object.entries(pillars[lang]).map(([key, label]) => (
+        <button class="filter-pill" data-filter={key}>{label.toUpperCase()}</button>
+      ))}
+    </div>
+
+    <div class="essay-index-list" id="essay-list">
+      {allEssays.map((essay, i) => (
+        <EssayRow
+          title={essay.data.title}
+          description={essay.data.description}
+          date={essay.data.date}
+          slug={essay.data.slug}
+          pillar={essay.data.pillar}
+          languages={[essay.data.language]}
+          lang={lang}
+          index={true}
+          number={allEssays.length - i}
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-12);
+  }
+
+  .essay-index-list {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-pill');
+  const list = document.getElementById('essay-list');
+  const essays = list?.querySelectorAll('[class*="row"]') || [];
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      buttons.forEach(b => b.classList.toggle('is-active', b === btn));
+
+      essays.forEach(essay => {
+        if (filter === 'all') {
+          essay.style.display = '';
+        } else {
+          // Would need to add data attributes to essays for this to work
+          essay.style.display = '';
+        }
+      });
+    });
+  });
+</script>

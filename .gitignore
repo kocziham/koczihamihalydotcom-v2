@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+pnpm-lock.yaml
+
+# build
+dist/
+.astro/
+
+# environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

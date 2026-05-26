@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const meta = {
+  title: 'Contact — Kocziha Mihály',
+  description: 'Get in touch.',
+};
+---
+
+<BaseLayout title={meta.title} description={meta.description} lang="en" currentNav="contact">
+  <div class="shell-index" style="padding-top: var(--space-20); padding-bottom: var(--space-32);">
+    <h1 style="font-family: var(--font-serif); font-size: var(--fs-40); margin: 0 0 var(--space-10) 0;">Contact</h1>
+
+    <div style="font-family: var(--font-serif); font-size: var(--fs-19); line-height: var(--lh-body); max-width: var(--measure-essay);">
+      <p>Email: <a href="mailto:mihaly.kocziha@smp.hu">mihaly.kocziha@smp.hu</a></p>
+      <p>LinkedIn: <a href="https://www.linkedin.com/in/koczihamilay/" target="_blank" rel="noopener noreferrer">linkedin.com/in/koczihamilay</a></p>
+      <p>For media inquiries, speaking invitations, or consulting engagements, reach out directly. I respond to substantive emails.</p>
+    </div>
+  </div>
+</BaseLayout>

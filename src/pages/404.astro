@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const meta = {
+  title: '404 — Kocziha Mihály',
+  description: 'Page not found.',
+};
+---
+
+<BaseLayout title={meta.title} description={meta.description} lang="en">
+  <div class="shell" style="padding-top: var(--space-20); padding-bottom: var(--space-32); min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+    <div style="text-align: center; font-family: var(--font-serif);">
+      <h1 style="font-size: var(--fs-52); margin: 0 0 var(--space-6) 0; font-weight: var(--fw-medium);">404</h1>
+      <p style="font-size: var(--fs-22); color: var(--color-text-muted); margin: 0 0 var(--space-8) 0;">Page not found.</p>
+      <a href="/" style="color: var(--color-accent); text-decoration: none; font-weight: var(--fw-medium);">Return home</a>
+    </div>
+  </div>
+</BaseLayout>

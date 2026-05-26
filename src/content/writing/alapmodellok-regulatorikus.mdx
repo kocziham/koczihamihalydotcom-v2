@@ -1,0 +1,46 @@
+---
+title: Alapmodellek és szabályozói súrlódás
+slug: alapmodellok-regulatorikus
+date: 2026-05-14T09:00:00Z
+description: A bankok alapmodell-felhasználása és a szabályozók elvárásai közötti szakadék szélesedik. Egyik fél sem tévedik; az eltérés szerkezeti.
+pillar: ai-governance
+language: hu
+crossLanguageRef: foundation-models-regulatory-friction
+draft: false
+---
+
+A Magyar Nemzeti Bank felülvizsgált modellkockázati ajánlása, amely márciusban jelent meg, negyvenegy oldal. Az Európai Központi Bank párhuzamos frissítése, négy héttel később, még hosszabb. Mindkettőt elolvastam, és úgy gondolom, hogy mind a kettő, különbözőképpen, a rossz problémát oldja meg.
+
+Ez nem panasz a szabályozókra. Az MNB munkabizottsága az egyik legjobban felszerelt volt, és az ECB dokumentuma számos olyan bekezdést tartalmaz, amelyet szívesen idéznék egy igazgatósági ülésre. A szerkezeti probléma az, hogy mindkét dokumentum egy 2017-es szerkezetkeretet—modell életciklusa, validálása, folyamatos felügyelete, három védelmi vonal—olyan rendszerekre alkalmaz, amelyek túlnőttek a keret feltételezésein.
+
+## Mit feltételez a régi keret
+
+Vegyünk egy hitelkockázati modellt 2019-ből. Megnevezhetjük a képzési adatait. Leírhatjuk a jellemzőit. Egy-két oldal alatt leírhatjuk a specifikációját. Futtathatunk egy champion-challenger tesztet. Monitorozhatunk a fix változókat. A modell értelmezhető. Egy validáló el tudja olvasni.[^1]
+
+A 2008 után kialakuló, majd az MNB és az ECB 2017 és 2019 között formalizált keret ilyen modellek körül épültek. Feltételezi, hogy egy kompetens második vonalbeli felülvizsgáló, megfelelő idő alatt, függetlenül meg tudja ítélni, hogy a modell megfelelő-e a célra.
+
+> Az alapmodellek nem modellok abban az értelemben. Inkább olyan infrastruktúra, amely történetesen kimenetet produkál. Senki a banknál nem hozta létre. Senki a banknál nem tudja olvasni.
+
+Az alapmodell nem modell abban az értelemben. Inkább olyan infrastruktúra, amely történetesen kimenetet produkál. Senki a banknál nem hozta létre. Senki a banknál nem tudja olvasni. A képzési adatok a legtöbb esetben szerződésileg nem nyilvánosíthatók. A "specifikáció" egy prompt és egy `temperature` beállítás. Az eltolódás, amelyre figyelned kell, nem a bemeneti változókon van—a modell súlyaiban van, amelyeket a szállító akkor változtat meg, amikor akar.
+
+A felülvizsgáló, akinek függetlenül meg kell ítélnie, hogy ez az eszköz megfelelő-e, nem talál fogódzkodót.
+
+## Mit csinálnak valójában a bankok
+
+Az a bankok, amelyekkel dolgozom, többnyire anélkül, hogy ezt kimondanák, feladták az alapmodell validálását. Eggyel feljebb mentek. A felhasználási esetet validálják: a promptot, az adatlekérési rendszert, a biztosítékokat, az emberi felülvizsgálatot, a naplózást, a vészzárlatot. Az alapmodellt úgy kezelik, mint egy szabályozott függőséget—ahogy a központi banki rendszert, a SWIFT hálózatot, vagy a hitelügyleti adatcsatornát—nem pedig egy saját modellként.[^2]
+
+Ezt helyesnek tartom. De ezt nem mondják egyik ajánlás sem.
+
+Az MNB dokumentuma huszonhat oldalon egy bekezdésben említi meg a nagy nyelvi modelleket, és az olvasót a hamarosan készülő útmutatásra utasítja. Az ECB dokumentuma egy kicsit jobban teljesít, de az a rész úgy olvasható, mintha azt valaki írta volna, aki soha nem tartott workshopot egy modellkockázati funkcióval, amely a hagyományos kontrollokat egy RAG-rendszerre próbálta alkalmazni.
+
+## A felügyeleti felület problémája
+
+A mélyebb kérdés nem a szöveg. Ez az implicit szerződés, amely mindkét dokumentum mögött van. Két évtizede az a szerződés: a bank végzi az MRM-et, a felügyelő értékeli, és közöttük egy olyan dokumentumkupac ül, amelyet a felügyelő megvizsgálhat.
+
+Az alapmodellek esetén ez a felület egyre fiktívabb. A bankok olyan dokumentumokat állítanak elő, amelyek megfelelnek a felügyelő által várt formátumnak, miközben az igazi kontrolwork másutt történik—értékelési kereteken, prompt-injekciós red teams-en, latencia SLO-kon a modell szállítójával. A dokumentumok nem hazudnak; csak már nem ott van a kontroll.
+
+Az iparág oldaláról a hasznos beavatkozásra nyitott ablak most van. Az a bankok, amelyek korán részt vesznek—a felügyelővel való kétoldalú csatornákon, az MNB által történetesen hajlandó szervezni munkabizottságokon—alakítják, hogy a következő keret milyen lesz. Az a bankok, amelyek nem, öröklik azt.
+
+[^1]: A 2017-es MNB ajánlás egy modellt "olyan kvantitatív módszernek, rendszernek vagy megközelítésnek" határozza meg, amely "statisztikai, gazdasági, pénzügyi vagy matematikai elméletek, technikákat és feltételezéseket alkalmaz a bemeneti adatok feldolgozására, hogy kvantitatív becsléseket adjon ki." Ez a meghatározás már nem bírja el az ő terhelését.
+
+[^2]: Beszélgetésekben az ország öt legfontosabb bankjából származó modellkockázati vezetőkkel 2026 januárja és áprilisa között. Egyikük sem nyilvánosan. Az egyezés figyelemreméltó.

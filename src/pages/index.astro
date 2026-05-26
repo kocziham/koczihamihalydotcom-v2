@@ -1,0 +1,12 @@
+---
+// Redirect root to /en/ based on Accept-Language header or default to /en/
+import { getLocaleFromRequest } from '../lib/locale';
+
+const acceptLanguage = Astro.request.headers.get('accept-language') || '';
+let lang = 'en';
+if (acceptLanguage.includes('hu')) {
+  lang = 'hu';
+}
+
+return Astro.redirect(`/${lang}/`);
+---

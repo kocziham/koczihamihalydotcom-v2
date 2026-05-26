@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const meta = {
+  title: 'About — Kocziha Mihály',
+  description: 'Kocziha Mihály is Head of Consulting at SMP Solutions, specializing in AI governance and banking transformation.',
+};
+---
+
+<BaseLayout title={meta.title} description={meta.description} lang="en" currentNav="about">
+  <div class="shell-index" style="padding-top: var(--space-20); padding-bottom: var(--space-32);">
+    <h1 style="font-family: var(--font-serif); font-size: var(--fs-40); margin: 0 0 var(--space-10) 0;">About</h1>
+
+    <div style="font-family: var(--font-serif); font-size: var(--fs-19); line-height: var(--lh-body); max-width: var(--measure-essay);">
+      <p>I lead the consulting practice at SMP Solutions, a Budapest-based technology consultancy focused on financial services, data platforms, and AI governance.</p>
+
+      <p>For the last eight years, I have worked with regulators, compliance teams, and risk functions at Hungarian and Central European banks on the regulatory and operational reality of deploying AI systems in highly regulated environments.</p>
+
+      <p>Before this, I spent a decade in data engineering and analytics, building platforms for banks and insurers across the CEE region.</p>
+
+      <p>These essays are a place to think out loud about what AI actually means for banking, the gap between regulatory intention and operational reality, and the quietly urgent work of turning AI transformation into something that actually works.</p>
+    </div>
+  </div>
+</BaseLayout>

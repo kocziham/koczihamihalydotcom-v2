@@ -1,0 +1,288 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { calculateReadingTime, formatDate } from '../../../lib/essays';
+import { pillars } from '../../../content/config';
+
+export async function getStaticPaths() {
+  const essays = await getCollection('writing', ({ data }) => {
+    return data.language === 'hu' && !data.draft;
+  });
+
+  return essays.map(essay => ({
+    params: { slug: essay.data.slug },
+    props: { essay },
+  }));
+}
+
+interface Props {
+  essay: any;
+}
+
+const { essay } = Astro.props;
+const { Content } = await essay.render();
+const readingTime = calculateReadingTime(essay.body);
+const formattedDate = formatDate(essay.data.date, 'hu');
+const pillarLabel = pillars.hu[essay.data.pillar];
+
+const meta = {
+  title: `${essay.data.title} — Kocziha Mihály`,
+  description: essay.data.description,
+};
+---
+
+<BaseLayout title={meta.title} description={meta.description} lang="hu" currentNav="writing">
+  <div class="progress" aria-hidden="true"></div>
+
+  <article class="shell-essay" style="padding-top: var(--space-16); padding-bottom: var(--space-32);">
+    <a class="essay-back" href="/hu/writing/">← Összes írás</a>
+
+    <div class="essay-eyebrow">
+      <span class="essay-num">008</span>
+      <span class="tag-dot" aria-hidden="true"></span>
+      <span class="tag-pillar">{pillarLabel.toUpperCase()}</span>
+      <span class="tag-dot" aria-hidden="true"></span>
+      <span class="tag">{formattedDate}</span>
+      <span class="tag-dot" aria-hidden="true"></span>
+      <span class="tag-lang">HU</span>
+      <span class="tag-dot" aria-hidden="true"></span>
+      <span class="tag">{readingTime} perc</span>
+    </div>
+
+    <h1 class="essay-title">{essay.data.title}</h1>
+    <p class="essay-deck">{essay.data.description}</p>
+
+    <div class="essay-byline">
+      <strong>Kocziha Mihálytól</strong>
+    </div>
+
+    <div class="essay-body">
+      <Content />
+    </div>
+
+    <div class="essay-end" aria-hidden="true">
+      <span class="essay-end-mark">§</span>
+    </div>
+
+    <section class="essay-tail">
+      <div class="essay-tail-label">Kapcsolódó írások</div>
+      <div class="essay-tail-list">
+        <a href="/hu/writing/">Összes írás</a>
+      </div>
+    </section>
+
+    <nav class="essay-prevnext" aria-label="Adjacent essays">
+      <div></div>
+      <div></div>
+    </nav>
+  </article>
+</BaseLayout>
+
+<style>
+  .essay-back {
+    display: inline-block;
+    margin-bottom: var(--space-10);
+    font-family: var(--font-sans);
+    font-size: var(--fs-13);
+    color: var(--color-accent);
+  }
+
+  .essay-back:hover {
+    text-decoration: underline;
+  }
+
+  .essay-eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+    font-family: var(--font-sans);
+    font-size: var(--fs-12);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .essay-num {
+    font-family: var(--font-mono);
+    font-size: var(--fs-12);
+    font-weight: var(--fw-medium);
+    color: var(--color-accent);
+  }
+
+  .essay-num::before {
+    content: "№ ";
+  }
+
+  .essay-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 8vw, 2.5rem);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--tracking-tight);
+    margin: 0 0 var(--space-6) 0;
+  }
+
+  .essay-deck {
+    font-family: var(--font-serif);
+    font-size: var(--fs-22);
+    font-style: italic;
+    line-height: var(--lh-snug);
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-8) 0;
+  }
+
+  .essay-byline {
+    font-family: var(--font-sans);
+    font-size: var(--fs-13);
+    color: var(--color-text-faint);
+    margin-bottom: var(--space-10);
+    padding-bottom: var(--space-10);
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .essay-body {
+    font-family: var(--font-serif);
+    font-size: var(--fs-19);
+    line-height: var(--lh-body);
+    max-width: var(--measure-essay);
+  }
+
+  .essay-body :global(h2) {
+    font-size: var(--fs-28);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-6);
+    line-height: var(--lh-snug);
+  }
+
+  .essay-body :global(h3) {
+    font-size: var(--fs-22);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-4);
+    line-height: var(--lh-snug);
+  }
+
+  .essay-body :global(p) {
+    margin: 0 0 var(--space-6) 0;
+  }
+
+  .essay-body :global(blockquote) {
+    border-left: 3px solid var(--color-accent);
+    padding-left: var(--space-4);
+    margin: var(--space-6) 0;
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+
+  .essay-body :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    padding: 2px 4px;
+    background: var(--color-paper-raised);
+    border-radius: var(--radius-1);
+  }
+
+  .essay-end {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-5);
+    margin: var(--space-16) 0;
+  }
+
+  .essay-end-mark {
+    font-family: var(--font-serif);
+    font-size: var(--fs-22);
+    font-style: italic;
+    color: var(--color-accent);
+  }
+
+  .essay-tail {
+    margin-top: var(--space-16);
+    padding-top: var(--space-16);
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .essay-tail-label {
+    font-family: var(--font-sans);
+    font-size: var(--fs-13);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+    margin-bottom: var(--space-6);
+  }
+
+  .essay-tail-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .essay-tail-list a {
+    font-family: var(--font-serif);
+    font-size: var(--fs-19);
+    color: var(--color-text);
+  }
+
+  .essay-tail-list a:hover {
+    color: var(--color-accent);
+  }
+
+  .essay-prevnext {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10);
+    margin-top: var(--space-16);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .essay-prevnext a {
+    text-decoration: none;
+  }
+
+  .essay-prevnext a.next {
+    text-align: right;
+  }
+
+  .essay-prevnext :global(.label) {
+    font-family: var(--font-sans);
+    font-size: var(--fs-12);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .essay-prevnext :global(.title-link) {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: var(--fs-19);
+    color: var(--color-text);
+    margin-top: var(--space-2);
+  }
+
+  .essay-prevnext a:hover :global(.title-link) {
+    color: var(--color-accent);
+  }
+</style>
+
+<script>
+  // Reading progress
+  const progress = document.querySelector('.progress');
+  if (progress) {
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      progress.style.width = scrollPercent + '%';
+    });
+  }
+
+  // Footnote linking
+  const footnotes = document.querySelectorAll('.essay-body sup');
+  footnotes.forEach(fn => {
+    if (fn.textContent) {
+      const num = fn.textContent;
+      fn.innerHTML = `<a href="#fn-${num}">${num}</a>`;
+    }
+  });
+</script>

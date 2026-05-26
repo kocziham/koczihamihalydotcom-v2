@@ -1,0 +1,46 @@
+---
+title: Foundation models and regulatory friction
+slug: foundation-models-regulatory-friction
+date: 2026-05-14T09:00:00Z
+description: The gap between how banks use foundation models and how regulators expect them to be governed is widening. Neither side is wrong; the mismatch is structural.
+pillar: ai-governance
+language: en
+crossLanguageRef: alapmodellok-regulatorikus
+draft: false
+---
+
+The Magyar Nemzeti Bank's revised model-risk recommendation, published in March, runs to forty-one pages. The European Central Bank's parallel update, four weeks later, runs longer. I have read them both, and I think they are both, in their different ways, addressing the wrong problem.
+
+This is not a complaint about regulators. The MNB's drafting committee is among the best-staffed it has been, and the ECB document contains several paragraphs worth quoting to a board. The structural problem is that both papers extend a 2017-vintage frame—model lifecycle, validation, ongoing monitoring, three lines of defence—onto systems that have outgrown the frame's assumptions.
+
+## What the old frame assumes
+
+Take a credit-risk model from 2019. You can name its training data. You can describe its features. You can write its specification in a few pages. You can run a champion-challenger. You can monitor drift on a fixed set of variables. The model is, in a meaningful sense, knowable. A validator can read it.[^1]
+
+The frame that emerged after 2008—and that the MNB and ECB formalised between 2017 and 2019—was built around this kind of model. It assumes that a competent second-line reviewer, given enough time, can form an independent judgement about whether the model is fit for purpose.
+
+> Foundation models are not models in that sense. They are closer to infrastructure that happens to produce outputs. Nobody at the bank built it. Nobody at the bank can read it.
+
+A foundation model is not a model in that sense. It is closer to infrastructure that happens to produce outputs. Nobody at the bank built it. Nobody at the bank can read it. The training data is, in most cases, contractually undisclosable. The "specification" is a prompt and a `temperature` setting. The drift you should worry about is not in input variables—it is in the model weights, which the vendor changes when they feel like it.
+
+The validator who is supposed to form an independent judgement about whether this thing is fit for purpose has no surface to grip.
+
+## What banks actually do
+
+The banks I work with have, mostly without saying so, given up on validating the foundation model itself. They have moved one layer up. They validate the use case: the prompt, the retrieval system, the guardrails, the human review, the audit trail, the kill switch. They treat the foundation model as a regulated dependency—the way they treat the core banking system, or the SWIFT network, or the credit-bureau feed—rather than a model they own.[^2]
+
+This is, I think, correct. It is also not what either recommendation says you should do.
+
+The MNB document acknowledges large language models in a single paragraph on page twenty-six, and refers the reader to forthcoming guidance. The ECB document does slightly better, but the section reads as if it were written by someone who has never run a workshop with a model-validation function trying to apply traditional controls to a RAG system.
+
+## The supervisory surface problem
+
+The deeper issue is not the text. It is the implicit contract behind both documents. For two decades, the contract has been: the bank does its MRM, the supervisor reviews it, and at the boundary between them sits a stack of documents the supervisor can examine.
+
+With foundation models, that surface is increasingly fictional. Banks produce documents that conform to the format the supervisor expects, while the actual control work happens elsewhere—in evaluation harnesses, in prompt-injection red teams, in latency SLOs with the model provider. The documents are not lying; they are no longer where the control lives.
+
+The window for a useful intervention from the industry side is open now. The banks that engage early—through bilateral channels with the supervisor, through working groups the MNB has historically been willing to convene—will shape what the next frame looks like. The ones that do not will inherit it.
+
+[^1]: The 2017 MNB guidance defines a model as "a quantitative method, system, or approach that applies statistical, economic, financial, or mathematical theories, techniques, and assumptions to process input data into quantitative estimates." This definition is doing a lot of work it can no longer carry.
+
+[^2]: In conversations with model-risk leads at three of the top five Hungarian banks between January and April 2026. None on the record. The convergence is striking.

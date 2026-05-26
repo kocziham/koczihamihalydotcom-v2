@@ -1,0 +1,214 @@
+/* =============================================================
+   koczihamihaly.com — design tokens
+   Light is the CSS default. [data-theme="dark"] applies the
+   operational default (the chosen production aesthetic).
+
+   Naming pattern: --category-purpose. Categories:
+   color, font, fs (font size), lh (line height), tracking
+   (letter-spacing), space (4 px grid), measure (content widths),
+   radius, shadow, dur (motion), z, breakpoint.
+
+   Hand-off note: anything visual in the implementation must
+   resolve to a token. If a layout needs a value not defined
+   here, that is a design gap — file it, do not invent.
+   ============================================================= */
+
+:root {
+  /* -----------------------------------------------------------
+     COLOR — surfaces & ink (light, default scheme)
+     ----------------------------------------------------------- */
+  --color-paper:           #fbfaf6;  /* primary page background */
+  --color-paper-raised:    #ffffff;  /* card / hover surface */
+  --color-paper-sunken:    #f4f1ea;  /* filter bar, deeper recess */
+
+  --color-text:            #0e1620;  /* primary body & headings */
+  --color-text-muted:      #4a5562;  /* secondary text */
+  --color-text-faint:      #7a8390;  /* tertiary / meta / dates */
+
+  --color-rule:            #e2dccb;  /* hairline dividers */
+  --color-rule-strong:     #c8c0aa;  /* slightly stronger rule */
+
+  /* -----------------------------------------------------------
+     COLOR — accent (single blue, four intensities)
+     ----------------------------------------------------------- */
+  --color-accent:          #5b7cfa;  /* default accent (indigo) */
+  --color-accent-strong:   #3d5bbf;  /* hovered / pressed accent */
+  --color-accent-soft:     #98aaf5;  /* receded accent */
+  --color-accent-wash:     #e5ebff;  /* selection bg, low fills */
+
+  /* Alternative palette (cyan) — opt in via [data-palette="cyan"].
+     Provided for the implementer; the default palette is indigo. */
+  --palette-cyan-default:  #0aa5d8;
+  --palette-cyan-strong:   #027ba6;
+  --palette-cyan-soft:     #6cccea;
+  --palette-cyan-wash:     #d8f1fa;
+
+  /* -----------------------------------------------------------
+     COLOR — focus ring (accessibility floor)
+     ----------------------------------------------------------- */
+  --focus-ring:            0 0 0 3px color-mix(in oklab, var(--color-accent) 40%, transparent);
+
+  /* -----------------------------------------------------------
+     FONT — families (with full fallback stacks)
+     ----------------------------------------------------------- */
+  --font-serif:  "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --font-sans:   "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono:   "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* -----------------------------------------------------------
+     FONT — sizes (modular scale ~1.2, 16 px base)
+     ----------------------------------------------------------- */
+  --fs-12:  0.75rem;       /* 12 — eyebrow labels, tag pills, ledger marks */
+  --fs-13:  0.8125rem;     /* 13 — meta info, secondary UI */
+  --fs-14:  0.875rem;      /* 14 — default UI (nav, buttons) */
+  --fs-15:  0.9375rem;     /* 15 — footnote body */
+  --fs-16:  1rem;          /* 16 — base */
+  --fs-17:  1.0625rem;     /* 17 */
+  --fs-18:  1.125rem;      /* 18 — body on mobile */
+  --fs-19:  1.1875rem;     /* 19 — body reading (the key value) */
+  --fs-20:  1.25rem;       /* 20 — list-row title */
+  --fs-22:  1.375rem;      /* 22 — italic deck, lede */
+  --fs-24:  1.5rem;        /* 24 */
+  --fs-28:  1.75rem;       /* 28 — essay subhead */
+  --fs-32:  2rem;          /* 32 — section title */
+  --fs-40:  2.5rem;        /* 40 — essay title (clamp ceiling) */
+  --fs-52:  3.25rem;       /* 52 — home hero (clamp ceiling) */
+  --fs-68:  4.25rem;       /* 68 — reserved for display */
+
+  /* -----------------------------------------------------------
+     FONT — line heights
+     ----------------------------------------------------------- */
+  --lh-tight:   1.06;
+  --lh-snug:    1.2;
+  --lh-normal:  1.46;
+  --lh-body:    1.62;     /* essay body reading */
+  --lh-loose:   1.75;
+
+  /* -----------------------------------------------------------
+     FONT — letter-spacing (tracking)
+     ----------------------------------------------------------- */
+  --tracking-tight:    -0.024em;    /* large display serif */
+  --tracking-snug:     -0.014em;    /* list-row titles */
+  --tracking-normal:   0;
+  --tracking-wide:     0.04em;      /* small caps UI */
+  --tracking-wider:    0.13em;      /* eyebrow / tag labels */
+
+  /* -----------------------------------------------------------
+     FONT — weights
+     ----------------------------------------------------------- */
+  --fw-regular:    400;
+  --fw-medium:     500;
+  --fw-semibold:   600;
+
+  /* -----------------------------------------------------------
+     SPACE — 4 px grid
+     ----------------------------------------------------------- */
+  --space-1:   0.25rem;   /* 4  */
+  --space-2:   0.5rem;    /* 8  */
+  --space-3:   0.75rem;   /* 12 */
+  --space-4:   1rem;      /* 16 */
+  --space-5:   1.25rem;   /* 20 */
+  --space-6:   1.5rem;    /* 24 */
+  --space-8:   2rem;      /* 32 */
+  --space-10:  2.5rem;    /* 40 */
+  --space-12:  3rem;      /* 48 */
+  --space-16:  4rem;      /* 64 */
+  --space-20:  5rem;      /* 80 */
+  --space-24:  6rem;      /* 96 */
+  --space-32:  8rem;      /* 128 */
+
+  /* -----------------------------------------------------------
+     MEASURE — content widths
+     ----------------------------------------------------------- */
+  --measure-essay:    40rem;    /* 640 — essay body, footnotes, tail */
+  --measure-wide:     46rem;    /* 736 — full-width figures inside essay */
+  --measure-index:    52rem;    /* 832 — writing index, speaking, contact */
+  --shell-max:        72rem;    /* 1152 — outer page max (home, about) */
+  --gutter:           clamp(1.25rem, 4vw, 3rem);
+
+  /* -----------------------------------------------------------
+     RADIUS — minimal; the editorial register is sharp
+     ----------------------------------------------------------- */
+  --radius-0:     0;
+  --radius-1:     2px;
+  --radius-2:     4px;
+  --radius-pill:  999px;
+
+  /* -----------------------------------------------------------
+     SHADOW — near-zero; the design uses hairlines, not lift
+     ----------------------------------------------------------- */
+  --shadow-0:         none;
+  --shadow-1:         0 1px 0 rgba(14, 22, 32, 0.04);
+  --shadow-hairline:  inset 0 -1px 0 var(--color-rule);
+
+  /* -----------------------------------------------------------
+     MOTION — restrained
+     ----------------------------------------------------------- */
+  --ease:        cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --dur-fast:    120ms;
+  --dur-base:    200ms;
+  --dur-slow:    360ms;
+
+  /* -----------------------------------------------------------
+     Z-INDEX — small, named scale
+     ----------------------------------------------------------- */
+  --z-base:        0;
+  --z-content:     1;
+  --z-progress:    40;    /* reading-progress bar */
+  --z-sticky:      50;    /* top bar */
+  --z-overlay:     60;    /* mobile nav */
+  --z-modal:       80;
+
+  /* -----------------------------------------------------------
+     BREAKPOINTS — for documentation; @media queries
+     in shared.css hardcode the same values.
+     ----------------------------------------------------------- */
+  --bp-mobile:     820px;
+  --bp-narrow:     560px;
+
+  color-scheme: light;
+}
+
+/* =============================================================
+   DARK — operational default. Apply data-theme="dark" on <html>.
+   Only colour tokens flip. Type, spacing, radii, motion are
+   theme-invariant.
+   ============================================================= */
+[data-theme="dark"] {
+  --color-paper:           #0a0c11;
+  --color-paper-raised:    #11141b;
+  --color-paper-sunken:    #07080c;
+
+  --color-text:            #f1f3f6;
+  --color-text-muted:      #8a92a0;
+  --color-text-faint:      #565d6b;
+
+  --color-rule:            #2e3440;
+  --color-rule-strong:     #3a414f;
+
+  --color-accent:          #6b8cff;
+  --color-accent-strong:   #8aa3ff;
+  --color-accent-soft:     #4d6cd9;
+  --color-accent-wash:     #1c2440;
+
+  --palette-cyan-default:  #38bdf8;
+  --palette-cyan-strong:   #5cccff;
+  --palette-cyan-soft:     #2089bd;
+  --palette-cyan-wash:     #0e2a3a;
+
+  --shadow-1:         0 1px 0 rgba(255, 255, 255, 0.02);
+  --shadow-hairline:  inset 0 -1px 0 var(--color-rule);
+
+  color-scheme: dark;
+}
+
+/* =============================================================
+   Palette opt-in (cyan as an alternative to default indigo).
+   Apply to <html data-palette="cyan">.
+   ============================================================= */
+[data-palette="cyan"] {
+  --color-accent:        var(--palette-cyan-default);
+  --color-accent-strong: var(--palette-cyan-strong);
+  --color-accent-soft:   var(--palette-cyan-soft);
+  --color-accent-wash:   var(--palette-cyan-wash);
+}
